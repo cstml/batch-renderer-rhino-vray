@@ -1,8 +1,39 @@
 """
+=========================================================
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+
 Title: Rhino Layer State Batch Render
+
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+=========================================================
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 Author: Vlad
-Description: The Script renders all the named views with
-            and goes through all the layer states
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+Description:    
+                The Script renders all the named views with
+                and goes through all the layer states
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+Notes:                
+                The folder destination, layerstate name,
+                & view names must be clear of spaces
+                or characters which cannot be part of
+                a file's name (i.e.
+                    Tilde (~)
+                    Number sign (#)
+                    Percent (%)
+                    Ampersand (&)
+                    Asterisk (*)
+                    Braces ({ })
+                    Backslash (\)
+                    Colon (:)
+                    Angle brackets (< >)
+                    Question mark (?)
+                    Slash (/)
+                    Plus sign (+)
+                    Pipe (|)
+                    Quotation mark (")
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+=========================================================
 """
 import rhinoscriptsyntax as rs
 import sys
@@ -41,11 +72,14 @@ def GetLayerStates():
             if len(MyArray)<14:
                 Trigger = False
         del MyArrayB[-1] #clean up the list
-#        print (MyArray)
-#        print (MyArrayB)q
         return MyArrayB
 
 def GetViewNames():
+    """
+    Returns a string of defining
+    the NamedViews that can be found 
+    in the file
+    """
     a = rs.NamedViews()
     return a
     
@@ -58,16 +92,28 @@ def ChooseFolderPath():
     folder = rs.BrowseForFolder(rs.DocumentPath, "Browse for folder", "Batch Render")
     return folder
 
-def Render(folder,view,state):
-    FileName = folder +'\\'+ View +'_'+State
+def Render(folder,View,State):
+    """
+    Defines the Rendering action
+    Saves the render to the browsed folder
+    Adds the name of the view and the name 
+    of the layer state to the naming of the
+    view
+    """
+    FileName = folder +'\\'+View+'_'+State
+    FileName = str(FileName)
     rs.Command ("!_-Render")
-    rs.Command ("_-SaveRenderWindowAs " + FileName)
+    rs.Command ("_-SaveRenderWindowAs "+FileName)
     rs.Command ("_-CloseRenderWindow")
+    return 1
 
 def ChangeView(View):
     rs.Command ("_-NamedView _Restore " + View + " _Enter", 0)
 
 if __name__ == "__main__":
+    """
+    Main Function
+    """
     VRay = rs.GetPlugInObject("V-Ray for Rhino")
     VRay.SetBatchRenderOn(True)  #Set Batch Render on True
     arrStates = GetLayerStates()  #initialise layer states
@@ -79,13 +125,3 @@ if __name__ == "__main__":
         for View in arrViewNames:
             ChangeView(View)
             Render(folder,View,State)
-
-#    for View in arrViewNames:
-#        ChangeView(View)
-#        print (View)
-#    for state in arrStates:
-#        ChangeLayerState(state)
-#        print state
-#    print "Done"
-#    Render()
-    
