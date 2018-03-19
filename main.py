@@ -15,9 +15,8 @@ Description:
 -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 Notes:                
                 The folder destination, layerstate name,
-                & view names must be clear of spaces
-                or characters which cannot be part of
-                a file's name (i.e.
+                & view names must be clear of characters 
+		which cannot be part of a file's name (i.e.
                     Tilde (~)
                     Number sign (#)
                     Percent (%)
@@ -100,7 +99,7 @@ def Render(folder,View,State):
     of the layer state to the naming of the
     view
     """
-    FileName = folder +'\\'+View+'_'+State
+    FileName = '"'+folder +'\\'+View+'_'+State+'"'
     FileName = str(FileName)
     rs.Command ("!_-Render")
     rs.Command ("_-SaveRenderWindowAs "+FileName)
