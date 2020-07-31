@@ -14,7 +14,7 @@ It is an automation of the rendering process, which is currently still missing w
 ## Short Info
 The code is written in Python using the RhinoScript library and the VRay 3 API. 
 
-### Contribute
+## Contribute
 - I have stopped maintaining the script as I currenly lack access to the license. 
 - Please feel free to use it under the MIT Licence 
 - If you have any edit suggestions, make a pull request
